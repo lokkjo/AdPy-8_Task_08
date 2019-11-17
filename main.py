@@ -17,17 +17,17 @@ class StudentsArchive:
         """
         with self.connection as conn:
             with conn.cursor() as curs:
-                curs.execute("""CREATE TABLE student(
+                curs.execute("""CREATE TABLE IF NOT EXISTS student(
                     id serial PRIMARY KEY,
                     name varchar(100),
                     gpa numeric (10,2),
                     birth timestamp with time zone);
                     """)
-                curs.execute("""CREATE TABLE course(
+                curs.execute("""CREATE TABLE IF NOT EXISTS course(
                     id serial PRIMARY KEY,
                     name varchar(100))
                     """)
-                curs.execute("""CREATE TABLE student_course(
+                curs.execute("""CREATE TABLE IF NOT EXISTS student_course(
                     id serial PRIMARY KEY,
                     student_id INTEGER REFERENCES student(id),
                     course_id INTEGER REFERENCES course(id));
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     # web_school.clear_db()
 
     # Создаём базу с заданными таблицами
-    # web_school.create_db()
+    web_school.create_db()
 
     # Добавляем информацию по студентам и
     # web_school.add_student(students)
